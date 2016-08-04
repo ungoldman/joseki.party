@@ -122,7 +122,7 @@ function render (game) {
     grid = x13()
   } else if (game.size === 9) {
     grid = x9()
-  } else if (game.size == 19) {
+  } else if (game.size === 19) {
     grid = x19()
   }
 

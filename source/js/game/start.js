@@ -33,7 +33,7 @@ function create (game) {
     name: game.name,
     acceptBoard: {
       black: false,
-      white: false,
+      white: false
     },
     joined: {
       black: isBlack,
