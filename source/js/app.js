@@ -1,34 +1,19 @@
 import bus from './lib/bus'
 import classy from './lib/classy'
-
-// App Level Routing
-import route from './routing'
-
-// The data model for handling Firebase
-import model from './model'
-
-// Routing Controls View Panels
-import view from './view'
-bus.on('view:set', model)
-
-// Create a new Game
-import newGame from './game/new'
-newGame()
-
-// Start a new Game
-import start from './game/start'
-start()
-
-// The board component itself
-import Goban from './game/goban'
-Goban()
-
-// The player control panel component
-import Player from './game/player'
-Player()
-
-
+import route from './routing' // App Level Routing
+import model from './model' // The data model for handling Firebase
+import view from './view' // Routing Controls View Panels
+import newGame from './game/new' // Create a new Game
+import start from './game/start' // Start a new Game
+import Goban from './game/goban' // The board component itself
+import Player from './game/player' // The player control panel component
 import Cleaner from './game/cleaner'
+
+bus.on('view:set', model)
+newGame()
+start()
+Goban()
+Player()
 Cleaner()
 
 function log (whatever) {
@@ -43,12 +28,10 @@ function change (e) {
 }
 
 var themeButtons = document.querySelectorAll('.js-switch-theme')
-console.log(themeButtons)
+
 themeButtons.forEach(function (button) {
-  console.log(button)
   button.addEventListener('click', change)
 })
-
 
 route()
 window.addEventListener('popstate', route)
