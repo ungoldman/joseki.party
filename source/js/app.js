@@ -1,37 +1,26 @@
-import bus from './lib/bus'
-import classy from './lib/classy'
-import route from './routing' // App Level Routing
-import model from './model' // The data model for handling Firebase
-import view from './view' // Routing Controls View Panels
-import newGame from './game/new' // Create a new Game
-import start from './game/start' // Start a new Game
-import Goban from './game/goban' // The board component itself
-import Player from './game/player' // The player control panel component
-import Cleaner from './game/cleaner'
+import choo from 'choo'
+import html from 'choo/html'
+import gameModel from './models/game'
+import main from './pages/main'
+import create from './pages/create'
+import missing from './pages/missing'
+import play from './pages/play'
+import watch from './pages/watch'
+import theme from './elements/theme'
 
-bus.on('view:set', model)
-newGame()
-start()
-Goban()
-Player()
-Cleaner()
+const app = choo()
 
-function log (whatever) {
-  console.log(whatever)
-}
+app.model(gameModel)
 
-function change (e) {
-  e.preventDefault()
-  var theme = e.target.getAttribute('data-theme')
-  var body = document.querySelector('body')
-  body.className = 'theme-' + theme
-}
+app.router('/404', (route) => [
+  route('/', main),
+  route('/new', create),
+  route('/404', missing),
+  route('/:game', watch, [
+    route('/:color', play)
+  ])
+])
 
-var themeButtons = document.querySelectorAll('.js-switch-theme')
-
-themeButtons.forEach(function (button) {
-  button.addEventListener('click', change)
-})
-
-route()
-window.addEventListener('popstate', route)
+const tree = app.start()
+document.body.appendChild(tree)
+// document.body.appendChild(theme())
